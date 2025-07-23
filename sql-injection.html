@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL Injection Demo - SecureZone</title>
+    <style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: #000;
+    color: #fff;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Navigation */
+nav {
+    background: #000;
+    padding: 1rem 0;
+    border-bottom: 1px solid #333;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    border: 1px solid #fff;
+}
+
+/* Main Content */
+.main-content {
+    padding: 2rem 0;
+}
+
+.demo-section {
+    background: #111;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid #333;
+}
+
+.demo-section h2 {
+    color: #fff;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+/* Login Mode Selector */
+.mode-selector {
+    display: flex;
+    gap: 1rem;
+    margin: 2rem 0;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.mode-btn {
+    padding: 1rem 2rem;
+    border: 2px solid;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background: transparent;
+}
+
+.insecure-btn {
+    color: #ff6b6b;
+    border-color: #ff6b6b;
+}
+
+.insecure-btn:hover, .insecure-btn.active {
+    background: #ff6b6b;
+    color: #000;
+}
+
+.secure-btn {
+    color: #51cf66;
+    border-color: #51cf66;
+}
+
+.secure-btn:hover, .secure-btn.active {
+    background: #51cf66;
+    color: #000;
+}
+
+/* Login Container */
+.login-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: #111;
+    padding: 2rem;
+    border: 1px solid #333;
+    text-align: center;
+}
+
+.login-container h3 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+.mode-indicator {
+    padding: 0.5rem 1rem;
+    margin-bottom: 1.5rem;
+    font-weight: bold;
+    border: 2px solid;
+    display: inline-block;
+}
+
+.mode-indicator.insecure {
+    color: #ff6b6b;
+    border-color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+}
+
+.mode-indicator.secure {
+    color: #51cf66;
+    border-color: #51cf66;
+    background: rgba(81, 207, 102, 0.1);
+}
+
+.form-group {
+    margin-bottom: 1rem;
+    text-align: left;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #333;
+    background: #000;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.form-group input:focus {
+    outline: none;
+    border-color: #fff;
+}
+
+.login-btn {
+    width: 100%;
+    background: #fff;
+    color: #000;
+    padding: 0.8rem;
+    border: 1px solid #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.login-btn:hover {
+    background: #000;
+    color: #fff;
+}
+
+/* SQL Query Display */
+.sql-display {
+    background: #000;
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border: 1px solid #333;
+    font-family: 'Courier New', monospace;
+    text-align: left;
+    display: none;
+}
+
+.sql-display h4 {
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.sql-query {
+    color: #51cf66;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    white-space: pre-wrap;
+    word-break: break-all;
+}
+
+.sql-query.vulnerable {
+    color: #ff6b6b;
+}
+
+.sql-query .highlight {
+    background: rgba(255, 255, 0, 0.3);
+    padding: 2px 4px;
+}
+
+/* Result Display */
+.result-display {
+    padding: 1.5rem;
+    margin: 1.5rem 0;
+    border: 2px solid;
+    text-align: center;
+    font-weight: bold;
+    display: none;
+}
+
+.result-display.success {
+    border-color: #51cf66;
+    background: rgba(81, 207, 102, 0.1);
+    color: #51cf66;
+}
+
+.result-display.failure {
+    border-color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.1);
+    color: #ff6b6b;
+}
+
+/* SQL Injection Hint */
+.injection-hint {
+    background: #111;
+    border: 1px solid #666;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.injection-hint h4 {
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.injection-code {
+    background: #000;
+    padding: 1rem;
+    font-family: 'Courier New', monospace;
+    color: #ff6b6b;
+    margin: 1rem 0;
+    border: 1px solid #333;
+}
+
+/* Explanation Section */
+.explanation-section {
+    background: #111;
+    padding: 2rem;
+    margin: 2rem 0;
+    border: 1px solid #333;
+}
+
+.explanation-section h3 {
+    color: #fff;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.explanation-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.explanation-card {
+    background: #000;
+    padding: 1.5rem;
+    border: 1px solid #333;
+}
+
+.explanation-card h4 {
+    margin-bottom: 1rem;
+}
+
+.explanation-card.vulnerable h4 {
+    color: #ff6b6b;
+}
+
+.explanation-card.secure h4 {
+    color: #51cf66;
+}
+
+.explanation-card ul {
+    list-style-position: inside;
+    color: #ccc;
+}
+
+.explanation-card li {
+    margin-bottom: 0.5rem;
+}
+
+/* Education Sections */
+.education-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.education-card {
+    background: #111;
+    padding: 1.5rem;
+    border: 1px solid #333;
+}
+
+.education-card h4 {
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.education-card ul {
+    list-style-position: inside;
+    color: #ccc;
+}
+
+.education-card li {
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        gap: 1rem;
+    }
+    
+    .login-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+    
+    .mode-selector {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .mode-btn {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+</style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <a href="index.html" class="logo">🛡️ SecureZone</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="phishing.html">Phishing</a></li>
+                    <li><a href="sql-injection.html" class="active">SQL Injection</a></li>
+                    <li><a href="xss.html">XSS Attack</a></li>
+                    <li><a href="tracker.html">IP Tracking</a></li>
+                    <li><a href="admin-panel.html">Admin Panel</a></li>
+                    <li><a href="security-tips.html">Security Tips</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="demo-section">
+                <h2>💉 SQL Injection Attack Demo</h2>
+                <p>This interactive demonstration shows the difference between vulnerable and secure login implementations. Try both modes to understand how SQL injection works and how to prevent it.</p>
+                
+                <div class="injection-hint">
+                    <h4>🎯 Try This SQL Injection Payload</h4>
+                    <p>In the username field, try entering:</p>
+                    <div class="injection-code">admin' --</div>
+                    <p>Or try:</p>
+                    <div class="injection-code">' OR '1'='1' --</div>
+                    <p>Leave the password field empty or enter anything. See how it behaves differently in each mode!</p>
+                </div>
+
+                <div class="mode-selector">
+                    <button id="insecureBtn" class="mode-btn insecure-btn active">🔴 Insecure Login (Vulnerable)</button>
+                    <button id="secureBtn" class="mode-btn secure-btn">🟢 Secure Login (Safe)</button>
+                </div>
+
+                <div class="login-container">
+                    <div id="modeIndicator" class="mode-indicator insecure">🔴 VULNERABLE MODE - String Concatenation</div>
+                    <h3>🔐 Admin Login Portal</h3>
+                    <form id="sqlForm">
+                        <div class="form-group">
+                            <label for="username">Username:</label>
+                            <input type="text" id="username" name="username" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password:</label>
+                            <input type="password" id="password" name="password" required>
+                        </div>
+                        <button type="submit" class="login-btn">Login</button>
+                    </form>
+
+                    <div id="sqlDisplay" class="sql-display">
+                        <h4>Generated SQL Query:</h4>
+                        <div id="sqlQuery" class="sql-query"></div>
+                    </div>
+
+                    <div id="resultDisplay" class="result-display">
+                        <div id="resultText"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="explanation-section">
+                <h3>💡 How It Works</h3>
+                <div class="explanation-grid">
+                    <div class="explanation-card vulnerable">
+                        <h4>🔴 Vulnerable Implementation</h4>
+                        <ul>
+                            <li>Uses string concatenation to build SQL queries</li>
+                            <li>User input is directly inserted into the query</li>
+                            <li>Malicious input can alter the query structure</li>
+                            <li>The <code>--</code> comment bypasses password check</li>
+                            <li>Attackers can inject arbitrary SQL commands</li>
+                        </ul>
+                    </div>
+
+                    <div class="explanation-card secure">
+                        <h4>🟢 Secure Implementation</h4>
+                        <ul>
+                            <li>Uses parameterized queries/prepared statements</li>
+                            <li>User input is treated as data, not code</li>
+                            <li>Special characters are properly escaped</li>
+                            <li>Query structure cannot be altered</li>
+                            <li>Prevents all forms of SQL injection</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="education-grid">
+                <div class="education-card">
+                    <h4>🔍 How SQL Injection Works</h4>
+                    <ul>
+                        <li>Attackers insert malicious SQL code into input fields</li>
+                        <li>Poorly coded applications execute this code directly</li>
+                        <li>Can bypass authentication, access databases</li>
+                        <li>May allow data theft, modification, or deletion</li>
+                        <li>One of the most common web vulnerabilities</li>
+                    </ul>
+                </div>
+
+                <div class="education-card">
+                    <h4>🛡️ How to Prevent SQL Injection</h4>
+                    <ul>
+                        <li>Use parameterized queries/prepared statements</li>
+                        <li>Validate and sanitize all user inputs</li>
+                        <li>Use stored procedures when possible</li>
+                        <li>Implement least privilege database access</li>
+                        <li>Regular security testing and code reviews</li>
+                        <li>Use ORM frameworks with built-in protection</li>
+                    </ul>
+                </div>
+
+                <div class="education-card">
+                    <h4>⚠️ Common SQL Injection Types</h4>
+                    <ul>
+                        <li><strong>Union-based:</strong> Combines results from multiple queries</li>
+                        <li><strong>Boolean-based:</strong> Uses true/false conditions</li>
+                        <li><strong>Time-based:</strong> Uses delays to infer information</li>
+                        <li><strong>Error-based:</strong> Exploits database error messages</li>
+                        <li><strong>Second-order:</strong> Stored and executed later</li>
+                    </ul>
+                </div>
+
+                <div class="education-card">
+                    <h4>📊 SQL Injection Impact</h4>
+                    <ul>
+                        <li>Ranked #3 in OWASP Top 10 vulnerabilities</li>
+                        <li>Found in 1 out of every 5 web applications</li>
+                        <li>Can lead to complete database compromise</li>
+                        <li>Average cost of data breach: $4.45M</li>
+                        <li>Affects applications across all industries</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let currentMode = 'insecure';
+
+        // Mode switching
+        document.getElementById('insecureBtn').addEventListener('click', function() {
+            currentMode = 'insecure';
+            updateModeUI();
+        });
+
+        document.getElementById('secureBtn').addEventListener('click', function() {
+            currentMode = 'secure';
+            updateModeUI();
+        });
+
+        function updateModeUI() {
+            const insecureBtn = document.getElementById('insecureBtn');
+            const secureBtn = document.getElementById('secureBtn');
+            const modeIndicator = document.getElementById('modeIndicator');
+
+            // Reset button states
+            insecureBtn.classList.remove('active');
+            secureBtn.classList.remove('active');
+
+            if (currentMode === 'insecure') {
+                insecureBtn.classList.add('active');
+                modeIndicator.className = 'mode-indicator insecure';
+                modeIndicator.textContent = '🔴 VULNERABLE MODE - String Concatenation';
+            } else {
+                secureBtn.classList.add('active');
+                modeIndicator.className = 'mode-indicator secure';
+                modeIndicator.textContent = '🟢 SECURE MODE - Parameterized Query';
+            }
+
+            // Hide previous results
+            document.getElementById('sqlDisplay').style.display = 'none';
+            document.getElementById('resultDisplay').style.display = 'none';
+        }
+
+        // Form submission
+        document.getElementById('sqlForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            if (currentMode === 'insecure') {
+                handleInsecureLogin(username, password);
+            } else {
+                handleSecureLogin(username, password);
+            }
+        });
+
+        function handleInsecureLogin(username, password) {
+            // Simulate vulnerable string concatenation
+            const query = `SELECT * FROM users WHERE username = '${username}' AND password = '${password}'`;
+            
+            displaySQL(query, true);
+            
+            // Check for SQL injection patterns
+            const sqlPatterns = [
+                "' OR '1'='1",
+                "' OR 1=1",
+                "admin'--",
+                "' OR 'a'='a",
+                "' UNION SELECT",
+                "'; DROP TABLE",
+                "' OR TRUE",
+                "1' OR '1'='1",
+                "'--",
+                "' #"
+            ];
+            
+            let isInjection = false;
+            for (let pattern of sqlPatterns) {
+                if (username.toLowerCase().includes(pattern.toLowerCase()) || 
+                    password.toLowerCase().includes(pattern.toLowerCase())) {
+                    isInjection = true;
+                    break;
+                }
+            }
+            
+            if (isInjection) {
+                displayResult(true, "🚨 SQL INJECTION SUCCESSFUL! Unauthorized access granted. In a real system, you would now have admin privileges!");
+            } else if (username === 'admin' && password === 'admin123') {
+                displayResult(true, "✅ Login successful! Welcome, admin.");
+            } else {
+                displayResult(false, "❌ Login failed: Invalid credentials.");
+            }
+        }
+
+        function handleSecureLogin(username, password) {
+            // Simulate parameterized query (escaped)
+            const escapedUsername = escapeSQL(username);
+            const escapedPassword = escapeSQL(password);
+            
+            const query = `SELECT * FROM users WHERE username = ? AND password = ?
+            
+-- Parameterized values:
+-- Parameter 1: '${escapedUsername}'
+-- Parameter 2: '${escapedPassword}'`;
+            
+            displaySQL(query, false);
+            
+            // In secure mode, only exact matches work
+            if (username === 'admin' && password === 'admin123') {
+                displayResult(true, "✅ Login successful! Welcome, admin.");
+            } else {
+                displayResult(false, "❌ Login failed: Invalid credentials. SQL injection attempts are blocked!");
+            }
+        }
+
+        function escapeSQL(input) {
+            // Simulate SQL escaping
+            return input.replace(/'/g, "''").replace(/\\/g, "\\\\");
+        }
+
+        function displaySQL(query, isVulnerable) {
+            const sqlDisplay = document.getElementById('sqlDisplay');
+            const sqlQuery = document.getElementById('sqlQuery');
+            
+            sqlQuery.className = isVulnerable ? 'sql-query vulnerable' : 'sql-query';
+            
+            if (isVulnerable) {
+                // Highlight dangerous parts in vulnerable queries
+                let highlightedQuery = query;
+                const dangerousPatterns = ["' OR '", "' --", "'; DROP", "' UNION"];
+                
+                dangerousPatterns.forEach(pattern => {
+                    const regex = new RegExp(pattern.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi');
+                    highlightedQuery = highlightedQuery.replace(regex, `<span class="highlight">${pattern}</span>`);
+                });
+                
+                sqlQuery.innerHTML = highlightedQuery;
+            } else {
+                sqlQuery.textContent = query;
+            }
+            
+            sqlDisplay.style.display = 'block';
+        }
+
+        function displayResult(success, message) {
+            const resultDisplay = document.getElementById('resultDisplay');
+            const resultText = document.getElementById('resultText');
+            
+            resultDisplay.className = success ? 'result-display success' : 'result-display failure';
+            resultText.textContent = message;
+            resultDisplay.style.display = 'block';
+            
+            // Scroll to result
+            resultDisplay.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+    </script>
+</body>
+</html>

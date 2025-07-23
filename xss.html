@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>XSS Attack Demo - CyberSec Academy</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: #000;
+    color: #fff;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Navigation */
+nav {
+    background: #000;
+    padding: 1rem 0;
+    border-bottom: 1px solid #333;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    border: 1px solid #fff;
+}
+
+/* Main Content */
+.main-content {
+    padding: 2rem 0;
+}
+
+.demo-section {
+    background: #111;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border: 1px solid #333;
+}
+
+.demo-section h2 {
+    color: #fff;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+}
+
+/* Comment Form */
+.comment-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    background: #111;
+    padding: 2rem;
+    border: 1px solid #333;
+}
+
+.comment-container h3 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 1.5rem;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: #fff;
+}
+
+.form-group input, .form-group textarea {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #333;
+    background: #000;
+    color: #fff;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+.form-group input:focus, .form-group textarea:focus {
+    outline: none;
+    border-color: #fff;
+}
+
+.submit-btn {
+    width: 100%;
+    background: #fff;
+    color: #000;
+    padding: 0.8rem;
+    border: 1px solid #fff;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.submit-btn:hover {
+    background: #000;
+    color: #fff;
+}
+
+/* XSS Hint */
+.xss-hint {
+    background: #111;
+    border: 1px solid #666;
+    padding: 1.5rem;
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.xss-hint h4 {
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.xss-code {
+    background: #000;
+    padding: 1rem;
+    font-family: 'Courier New', monospace;
+    color: #fff;
+    margin: 1rem 0;
+    border: 1px solid #333;
+}
+
+/* Comments Display */
+.comments-section {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: #111;
+    border: 1px solid #333;
+}
+
+.comments-section h4 {
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.comment {
+    background: #000;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid #333;
+}
+
+.comment-author {
+    font-weight: bold;
+    color: #fff;
+    margin-bottom: 0.5rem;
+}
+
+.comment-text {
+    color: #ccc;
+}
+
+/* Education Sections */
+.education-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-top: 2rem;
+}
+
+.education-card {
+    background: #111;
+    padding: 1.5rem;
+    border: 1px solid #333;
+}
+
+.education-card h4 {
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.education-card ul {
+    list-style-position: inside;
+    color: #ccc;
+}
+
+.education-card li {
+    margin-bottom: 0.5rem;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        gap: 1rem;
+    }
+    
+    .comment-container {
+        margin: 1rem;
+        padding: 1.5rem;
+    }
+}
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <a href="index.html" class="logo">🛡️ CyberSec Academy</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="phishing.html">Phishing</a></li>
+                    <li><a href="sql-injection.html">SQL Injection</a></li>
+                    <li><a href="xss.html" class="active">XSS Attack</a></li>
+                    <li><a href="tracker.html">IP Tracking</a></li>
+                    <li><a href="admin-panel.html">Admin Panel</a></li>
+                    <li><a href="security-tips.html">Security Tips</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <div class="demo-section">
+                <h2>⚡ Cross-Site Scripting (XSS) Demo</h2>
+                <p>This vulnerable comment form demonstrates how XSS attacks work. Try injecting JavaScript code to see how malicious scripts can be executed.</p>
+                
+                <div class="xss-hint">
+                    <h4>🎯 Try These XSS Payloads</h4>
+                    <p>In the comment field, try entering one of these:</p>
+                    <div class="xss-code">&lt;script&gt;alert('XSS Attack!')&lt;/script&gt;</div>
+                    <div class="xss-code">&lt;img src="x" onerror="alert('Image XSS!')"&gt;</div>
+                    <div class="xss-code">&lt;svg onload="alert('SVG XSS!')"&gt;&lt;/svg&gt;</div>
+                    <p>These payloads will execute JavaScript code when the comment is displayed!</p>
+                </div>
+
+                <div class="comment-container">
+                    <h3>💬 Leave a Comment</h3>
+                    <form id="commentForm">
+                        <div class="form-group">
+                            <label for="name">Your Name:</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Comment:</label>
+                            <textarea id="comment" name="comment" placeholder="Share your thoughts..." required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn">Post Comment</button>
+                    </form>
+                </div>
+
+                <div class="comments-section">
+                    <h4>📝 Recent Comments</h4>
+                    <div id="commentsDisplay">
+                        <div class="comment">
+                            <div class="comment-author">John Doe</div>
+                            <div class="comment-text">Great article! Very informative about web security.</div>
+                        </div>
+                        <div class="comment">
+                            <div class="comment-author">Jane Smith</div>
+                            <div class="comment-text">Thanks for sharing this knowledge. Everyone should learn about XSS!</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="education-grid">
+                <div class="education-card">
+                    <h4>🔍 How XSS Works</h4>
+                    <ul>
+                        <li>Attackers inject malicious scripts into web pages</li>
+                        <li>Scripts execute in victims' browsers</li>
+                        <li>Can steal cookies, session tokens, or personal data</li>
+                        <li>May redirect users to malicious sites</li>
+                        <li>Often targets input fields and comment sections</li>
+                    </ul>
+                </div>
+
+                <div class="education-card">
+                    <h4>🛡️ How to Prevent XSS</h4>
+                    <ul>
+                        <li>Validate and sanitize all user inputs</li>
+                        <li>Use Content Security Policy (CSP) headers</li>
+                        <li>Encode output data before displaying</li>
+                        <li>Use secure frameworks with built-in protection</li>
+                        <li>Implement proper session management</li>
+                        <li>Regular security testing and code reviews</li>
+                    </ul>
+                </div>
+
+                <div class="education-card">
+                    <h4>⚠️ Types of XSS Attacks</h4>
+                    <ul>
+                        <li><strong>Stored XSS:</strong> Malicious script stored on server</li>
+                        <li><strong>Reflected XSS:</strong> Script reflected from user input</li>
+                        <li><strong>DOM-based XSS:</strong> Client-side script modification</li>
+                        <li><strong>Blind XSS:</strong> Payload triggers in admin panels</li>
+                        <li><strong>Self XSS:</strong> Tricks users into running scripts</li>
+                    </ul>
+                </div>
+
+                <div class="education-card">
+                    <h4>📊 XSS Attack Statistics</h4>
+                    <ul>
+                        <li>Found in 40% of all web applications</li>
+                        <li>Ranked #7 in OWASP Top 10 vulnerabilities</li>
+                        <li>Can affect millions of users simultaneously</li>
+                        <li>Average time to detect: 197 days</li>
+                        <li>Most common in social media and forums</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.getElementById('commentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const comment = document.getElementById('comment').value;
+            
+            // Create new comment element (INTENTIONALLY VULNERABLE for demo)
+            const commentDiv = document.createElement('div');
+            commentDiv.className = 'comment';
+            
+            // This is intentionally vulnerable - DO NOT do this in real applications!
+            commentDiv.innerHTML = `
+                <div class="comment-author">${name}</div>
+                <div class="comment-text">${comment}</div>
+            `;
+            
+            // Add to comments display
+            const commentsDisplay = document.getElementById('commentsDisplay');
+            commentsDisplay.insertBefore(commentDiv, commentsDisplay.firstChild);
+            
+            // Clear the form
+            this.reset();
+            
+            // Show educational message after a brief delay
+            setTimeout(() => {
+                if (comment.includes('<script>') || comment.includes('onerror=') || comment.includes('onload=')) {
+                    alert('🚨 XSS Attack Detected!\n\nIf this were a real website, your malicious script would have executed successfully. This demonstrates why input validation and output encoding are crucial for web security!');
+                }
+            }, 100);
+        });
+
+        // Add some example comments with safe content
+        document.addEventListener('DOMContentLoaded', function() {
+            // Educational note about the vulnerability
+            console.log('⚠️ EDUCATIONAL DEMO: This form is intentionally vulnerable to XSS attacks for learning purposes. Never implement user input handling like this in production!');
+        });
+    </script>
+</body>
+</html>

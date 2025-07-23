@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Best Practices - CyberSec Academy</title>
+    <style>
+        * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: #000;
+    color: #fff;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* Navigation */
+nav {
+    background: #000;
+    padding: 1rem 0;
+    border-bottom: 1px solid #333;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-decoration: none;
+}
+
+.nav-links {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: #fff;
+    text-decoration: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.nav-links a:hover, .nav-links a.active {
+    border: 1px solid #fff;
+}
+
+/* Main Content */
+.main-content {
+    padding: 2rem 0;
+}
+
+.hero-section {
+    text-align: center;
+    padding: 3rem 0;
+    background: #111;
+    margin-bottom: 3rem;
+    border: 1px solid #333;
+}
+
+.hero-section h1 {
+    color: #fff;
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+}
+
+.hero-section p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: 0 auto;
+    color: #ccc;
+}
+
+/* Tips Grid */
+.tips-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+}
+
+.tip-category {
+    background: #111;
+    padding: 2rem;
+    border: 1px solid #333;
+    transition: all 0.2s ease;
+}
+
+.tip-category:hover {
+    border-color: #fff;
+}
+
+.tip-category h3 {
+    color: #fff;
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.tip-category .icon {
+    font-size: 2rem;
+}
+
+.tip-list {
+    list-style: none;
+}
+
+.tip-list li {
+    padding: 0.8rem 0;
+    border-bottom: 1px solid #333;
+    position: relative;
+    padding-left: 2rem;
+}
+
+.tip-list li:last-child {
+    border-bottom: none;
+}
+
+.tip-list li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    color: #fff;
+    font-weight: bold;
+}
+
+/* Emergency Section */
+.emergency-section {
+    background: #111;
+    border: 1px solid #333;
+    padding: 2rem;
+    margin: 3rem 0;
+    text-align: center;
+}
+
+.emergency-section h3 {
+    color: #fff;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+}
+
+.emergency-steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+.emergency-step {
+    background: #000;
+    padding: 1.5rem;
+    border: 1px solid #333;
+}
+
+.emergency-step h4 {
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+/* Tools Section */
+.tools-section {
+    background: #111;
+    padding: 2rem;
+    margin: 3rem 0;
+    border: 1px solid #333;
+}
+
+.tools-section h3 {
+    color: #fff;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.tool-card {
+    background: #000;
+    padding: 1.5rem;
+    border: 1px solid #333;
+}
+
+.tool-card h4 {
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.tool-card .tool-type {
+    background: #333;
+    color: #fff;
+    padding: 0.3rem 0.8rem;
+    font-size: 0.8rem;
+    display: inline-block;
+    margin-bottom: 1rem;
+    border: 1px solid #666;
+}
+
+/* Checklist Section */
+.checklist-section {
+    background: #111;
+    border: 1px solid #333;
+    padding: 2rem;
+    margin: 3rem 0;
+}
+
+.checklist-section h3 {
+    color: #fff;
+    font-size: 1.8rem;
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.checklist {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.checklist-category {
+    background: #000;
+    padding: 1.5rem;
+    border: 1px solid #333;
+}
+
+.checklist-category h4 {
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+.checklist-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+}
+
+.checklist-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #fff;
+}
+
+.checklist-item label {
+    cursor: pointer;
+    flex: 1;
+}
+
+@media (max-width: 768px) {
+    .nav-links {
+        gap: 1rem;
+    }
+    
+    .hero-section h1 {
+        font-size: 2rem;
+    }
+    
+    .tips-grid {
+        grid-template-columns: 1fr;
+    }
+}
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="container">
+            <div class="nav-container">
+                <a href="index.html" class="logo">🛡️ CyberSec Academy</a>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="phishing.html">Phishing</a></li>
+                    <li><a href="sql-injection.html">SQL Injection</a></li>
+                    <li><a href="xss.html">XSS Attack</a></li>
+                    <li><a href="tracker.html">IP Tracking</a></li>
+                    <li><a href="admin-panel.html">Admin Panel</a></li>
+                    <li><a href="security-tips.html" class="active">Security Tips</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="main-content">
+        <div class="container">
+            <section class="hero-section">
+                <h1>🛡️ Cybersecurity Best Practices</h1>
+                <p>Essential security tips and practices to protect yourself in the digital world. Follow these guidelines to stay safe online and protect your personal information.</p>
+            </section>
+
+            <div class="tips-grid">
+                <div class="tip-category">
+                    <h3><span class="icon">🔐</span> Password Security</h3>
+                    <ul class="tip-list">
+                        <li>Use unique passwords for every account</li>
+                        <li>Create passwords with at least 12 characters</li>
+                        <li>Include uppercase, lowercase, numbers, and symbols</li>
+                        <li>Use a reputable password manager</li>
+                        <li>Enable two-factor authentication (2FA) everywhere</li>
+                        <li>Never share passwords or write them down</li>
+                        <li>Change passwords immediately if breached</li>
+                    </ul>
+                </div>
+
+                <div class="tip-category">
+                    <h3><span class="icon">📧</span> Email Security</h3>
+                    <ul class="tip-list">
+                        <li>Verify sender identity before clicking links</li>
+                        <li>Check URLs carefully for misspellings</li>
+                        <li>Never provide sensitive info via email</li>
+                        <li>Use email encryption for sensitive communications</li>
+                        <li>Be suspicious of urgent or threatening messages</li>
+                        <li>Don't download unexpected attachments</li>
+                        <li>Report phishing attempts to your IT team</li>
+                    </ul>
+                </div>
+
+                <div class="tip-category">
+                    <h3><span class="icon">🌐</span> Web Browsing</h3>
+                    <ul class="tip-list">
+                        <li>Only visit HTTPS websites for sensitive activities</li>
+                        <li>Keep browsers and plugins updated</li>
+                        <li>Use ad blockers and privacy extensions</li>
+                        <li>Clear cookies and browsing data regularly</li>
+                        <li>Avoid public Wi-Fi for sensitive activities</li>
+                        <li>Use private/incognito mode when appropriate</li>
+                        <li>Verify website certificates and URLs</li>
+                    </ul>
+                </div>
+
+                <div class="tip-category">
+                    <h3><span class="icon">📱</span> Mobile Security</h3>
+                    <ul class="tip-list">
+                        <li>Keep your device OS and apps updated</li>
+                        <li>Only download apps from official stores</li>
+                        <li>Review app permissions before installing</li>
+                        <li>Use device lock screens with strong PINs</li>
+                        <li>Enable remote wipe capabilities</li>
+                        <li>Avoid connecting to unknown Wi-Fi networks</li>
+                        <li>Use mobile VPN for public networks</li>
+                    </ul>
+                </div>
+
+                <div class="tip-category">
+                    <h3><span class="icon">💻</span> Computer Security</h3>
+                    <ul class="tip-list">
+                        <li>Install security updates immediately</li>
+                        <li>Use reputable antivirus software</li>
+                        <li>Enable automatic screen locks</li>
+                        <li>Encrypt your hard drive</li>
+                        <li>Regular backup important data</li>
+                        <li>Use standard user accounts, not admin</li>
+                        <li>Disable unnecessary services and ports</li>
+                    </ul>
+                </div>
+
+                <div class="tip-category">
+                    <h3><span class="icon">🏠</span> Home Network</h3>
+                    <ul class="tip-list">
+                        <li>Change default router passwords</li>
+                        <li>Use WPA3 encryption for Wi-Fi</li>
+                        <li>Hide your network name (SSID)</li>
+                        <li>Keep router firmware updated</li>
+                        <li>Use guest networks for visitors</li>
+                        <li>Monitor connected devices regularly</li>
+                        <li>Disable WPS and unnecessary features</li>
+                    </ul>
+                </div>
+            </div>
+
+            <section class="emergency-section">
+                <h3>🚨 If You've Been Compromised</h3>
+                <p>Take these immediate steps if you suspect your accounts or devices have been compromised:</p>
+                
+                <div class="emergency-steps">
+                    <div class="emergency-step">
+                        <h4>1. Immediate Actions</h4>
+                        <ul>
+                            <li>Disconnect from the internet</li>
+                            <li>Change all passwords</li>
+                            <li>Enable 2FA on all accounts</li>
+                            <li>Check account activity logs</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="emergency-step">
+                        <h4>2. Assess the Damage</h4>
+                        <ul>
+                            <li>Check bank and credit card statements</li>
+                            <li>Review recent account activities</li>
+                            <li>Look for unauthorized purchases</li>
+                            <li>Check credit reports</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="emergency-step">
+                        <h4>3. Report and Recover</h4>
+                        <ul>
+                            <li>Contact your bank and credit card companies</li>
+                            <li>File reports with relevant authorities</li>
+                            <li>Contact credit bureaus</li>
+                            <li>Document everything</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="emergency-step">
+                        <h4>4. Prevent Future Attacks</h4>
+                        <ul>
+                            <li>Update all software and systems</li>
+                            <li>Run full antivirus scans</li>
+                            <li>Review and improve security practices</li>
+                            <li>Monitor accounts closely</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <section class="tools-section">
+                <h3>🛠️ Recommended Security Tools</h3>
+                
+                <div class="tools-grid">
+                    <div class="tool-card">
+                        <div class="tool-type">Password Manager</div>
+                        <h4>Bitwarden / 1Password</h4>
+                        <p>Generate and store unique passwords for all your accounts. Essential for maintaining good password hygiene.</p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="tool-type">VPN Service</div>
+                        <h4>NordVPN / ExpressVPN</h4>
+                        <p>Encrypt your internet connection and hide your IP address, especially important on public networks.</p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="tool-type">Antivirus</div>
+                        <h4>Malwarebytes / Bitdefender</h4>
+                        <p>Protect against malware, viruses, and other malicious software with real-time scanning.</p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="tool-type">Browser Extension</div>
+                        <h4>uBlock Origin</h4>
+                        <p>Block ads, trackers, and malicious websites to improve privacy and security while browsing.</p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="tool-type">Email Security</div>
+                        <h4>ProtonMail / Tutanota</h4>
+                        <p>End-to-end encrypted email services that protect your communications from prying eyes.</p>
+                    </div>
+                    
+                    <div class="tool-card">
+                        <div class="tool-type">File Encryption</div>
+                        <h4>VeraCrypt / BitLocker</h4>
+                        <p>Encrypt sensitive files and drives to protect data even if your device is stolen or compromised.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="checklist-section">
+                <h3>✅ Monthly Security Checklist</h3>
+                <p style="text-align: center; margin-bottom: 2rem;">Use this checklist to maintain good security hygiene:</p>
+                
+                <div class="checklist">
+                    <div class="checklist-category">
+                        <h4>Account Security</h4>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check1">
+                            <label for="check1">Review account activity logs</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check2">
+                            <label for="check2">Update passwords for critical accounts</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check3">
+                            <label for="check3">Check 2FA settings</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check4">
+                            <label for="check4">Review connected apps and permissions</label>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-category">
+                        <h4>System Updates</h4>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check5">
+                            <label for="check5">Install OS security updates</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check6">
+                            <label for="check6">Update all installed software</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check7">
+                            <label for="check7">Update browser and extensions</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check8">
+                            <label for="check8">Update mobile apps</label>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-category">
+                        <h4>Data Protection</h4>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check9">
+                            <label for="check9">Backup important files</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check10">
+                            <label for="check10">Test backup restoration</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check11">
+                            <label for="check11">Clear browser data and cookies</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check12">
+                            <label for="check12">Review cloud storage permissions</label>
+                        </div>
+                    </div>
+                    
+                    <div class="checklist-category">
+                        <h4>Network Security</h4>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check13">
+                            <label for="check13">Check router firmware updates</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check14">
+                            <label for="check14">Review connected devices</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check15">
+                            <label for="check15">Test VPN connection</label>
+                        </div>
+                        <div class="checklist-item">
+                            <input type="checkbox" id="check16">
+                            <label for="check16">Run network security scan</label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        // Save checklist progress to localStorage
+        document.addEventListener('DOMContentLoaded', function() {
+            const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+            
+            // Load saved progress
+            checkboxes.forEach(checkbox => {
+                const saved = localStorage.getItem(checkbox.id);
+                if (saved === 'true') {
+                    checkbox.checked = true;
+                }
+                
+                // Save progress when changed
+                checkbox.addEventListener('change', function() {
+                    localStorage.setItem(this.id, this.checked);
+                });
+            });
+            
+            // Add completion celebration
+            function checkCompletion() {
+                const totalChecks = checkboxes.length;
+                const completedChecks = Array.from(checkboxes).filter(cb => cb.checked).length;
+                
+                if (completedChecks === totalChecks) {
+                    setTimeout(() => {
+                        alert('🎉 Congratulations!\n\nYou\'ve completed the monthly security checklist! Your digital security posture is now significantly improved. Remember to repeat this checklist monthly to maintain good security hygiene.');
+                    }, 500);
+                }
+            }
+            
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', checkCompletion);
+            });
+        });
+    </script>
+</body>
+</html>
