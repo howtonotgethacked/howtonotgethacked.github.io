@@ -45,6 +45,7 @@ nav {
     font-weight: bold;
     color: #fff;
     text-decoration: none;
+    padding-bottom: 1rem;
 }
 
 .nav-links {
@@ -243,7 +244,7 @@ nav {
     <nav>
         <div class="container">
             <div class="nav-container">
-                <a href="index.html" class="logo">how to not get hacked</a>
+                <a href="index.html" class="logo">HOW TO NOT GET HACKED</a>
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="phishing.html">Phishing</a></li>
@@ -261,19 +262,19 @@ nav {
         <div class="container">
             <div class="demo-section">
                 <h2>⚡ Cross-Site Scripting (XSS) Demo</h2>
-                <p>This vulnerable comment form demonstrates how XSS attacks work. Try injecting JavaScript code to see how malicious scripts can be executed.</p>
+                <p>Imagine you're writing a comment on a website, but instead of just text, you sneak in a tiny piece of code that <b>everyone</b> who views the comment will run! That's <b>XSS</b> (Cross-Site Scripting) for you. It's like a digital graffiti artist painting malicious code on a public wall. This vulnerable comment form is your canvas – try injecting some <b>JavaScript</b> (the language that makes websites interactive) to see the mischief! 😈</p>
                 
                 <div class="xss-hint">
-                    <h4>🎯 Try These XSS Payloads</h4>
-                    <p>In the comment field, try entering one of these:</p>
+                    <h4>🎯 Try These XSS Payloads (Your Digital Spray Paint! 🎨)</h4>
+                    <p>In the comment field, try entering one of these. Watch what happens when you post! (Don't worry, it's just a demo, no real damage!)</p>
                     <div class="xss-code">&lt;script&gt;alert('XSS Attack!')&lt;/script&gt;</div>
                     <div class="xss-code">&lt;img src="x" onerror="alert('Image XSS!')"&gt;</div>
                     <div class="xss-code">&lt;svg onload="alert('SVG XSS!')"&gt;&lt;/svg&gt;</div>
-                    <p>These payloads will execute JavaScript code when the comment is displayed!</p>
+                    <p>These little snippets will execute <b>JavaScript</b> code when the comment is displayed! Prepare for pop-up party! 🎉</p>
                 </div>
 
                 <div class="comment-container">
-                    <h3>💬 Leave a Comment</h3>
+                    <h3>💬 Leave a Comment (At Your Own Risk! 😉)</h3>
                     <form id="commentForm">
                         <div class="form-group">
                             <label for="name">Your Name:</label>
@@ -281,14 +282,14 @@ nav {
                         </div>
                         <div class="form-group">
                             <label for="comment">Comment:</label>
-                            <textarea id="comment" name="comment" placeholder="Share your thoughts..." required></textarea>
+                            <textarea id="comment" name="comment" placeholder="Share your thoughts... or some sneaky code..." required></textarea>
                         </div>
                         <button type="submit" class="submit-btn">Post Comment</button>
                     </form>
                 </div>
 
                 <div class="comments-section">
-                    <h4>📝 Recent Comments</h4>
+                    <h4>📝 Recent Comments (Where the Magic Happens!)</h4>
                     <div id="commentsDisplay">
                         <div class="comment">
                             <div class="comment-author">John Doe</div>
@@ -304,47 +305,47 @@ nav {
 
             <div class="education-grid">
                 <div class="education-card">
-                    <h4>🔍 How XSS Works</h4>
+                    <h4>🔍 How XSS Works (The Sneaky Script Story)</h4>
                     <ul>
-                        <li>Attackers inject malicious scripts into web pages</li>
-                        <li>Scripts execute in victims' browsers</li>
-                        <li>Can steal cookies, session tokens, or personal data</li>
-                        <li>May redirect users to malicious sites</li>
-                        <li>Often targets input fields and comment sections</li>
+                        <li>Attackers inject malicious <b>JavaScript</b> code into web pages. It's like slipping a secret message into a public announcement.</li>
+                        <li>When you visit that page, your browser innocently executes these scripts. "Oh, a script! I must run it!" says your browser. 🤦‍♀️</li>
+                        <li>This can lead to stealing your <b>cookies</b> (small data files websites store on your computer, often used to keep you logged in), <b>session tokens</b> (digital keys that prove you're logged in), or other personal data.</li>
+                        <li>They might even redirect you to a completely different, evil website. "Surprise! You're on a hacker's playground now!"</li>
+                        <li>It often targets places where users can input text, like comment sections, forums, or search bars.</li>
                     </ul>
                 </div>
 
                 <div class="education-card">
-                    <h4>🛡️ How to Prevent XSS</h4>
+                    <h4>🛡️ How to Prevent XSS (Become a Code Cleaner! 🧹)</h4>
                     <ul>
-                        <li>Validate and sanitize all user inputs</li>
-                        <li>Use Content Security Policy (CSP) headers</li>
-                        <li>Encode output data before displaying</li>
-                        <li>Use secure frameworks with built-in protection</li>
-                        <li>Implement proper session management</li>
-                        <li>Regular security testing and code reviews</li>
+                        <li><b>Validate and sanitize</b> all user inputs. Think of it as scrubbing every piece of data clean before it touches your website. No dirty code allowed!</li>
+                        <li>Use <b>Content Security Policy (CSP)</b> headers. This is like telling your browser, "Only run scripts from <b>these</b> trusted sources, nowhere else!"</li>
+                        <li><b>Encode output data</b> before displaying it. If someone types <code>&lt;h1&gt;</code>, make sure it shows up as <code>&amp;lt;h1&amp;gt;</code> and not a giant heading!</li>
+                        <li>Use secure frameworks with built-in protection. Let the pros handle the tricky bits!</li>
+                        <li>Implement proper session management. Make sure those <b>session tokens</b> are super secure.</li>
+                        <li>Regular security testing and code reviews. Find those hidden script injection points!</li>
                     </ul>
                 </div>
 
                 <div class="education-card">
-                    <h4>⚠️ Types of XSS Attacks</h4>
+                    <h4>⚠️ Types of XSS Attacks (The Many Forms of Mischief)</h4>
                     <ul>
-                        <li><strong>Stored XSS:</strong> Malicious script stored on server</li>
-                        <li><strong>Reflected XSS:</strong> Script reflected from user input</li>
-                        <li><strong>DOM-based XSS:</strong> Client-side script modification</li>
-                        <li><strong>Blind XSS:</strong> Payload triggers in admin panels</li>
-                        <li><strong>Self XSS:</strong> Tricks users into running scripts</li>
+                        <li><b>Stored XSS:</b> The malicious script is saved directly on the server (like a permanent graffiti tag). Everyone who visits sees it.</li>
+                        <li><b>Reflected XSS:</b> The script is just "reflected" back to the user from their input (like an echo of evil). It's a one-time show.</li>
+                        <li><b>DOM-based XSS:</b> This one happens entirely on your browser, without the server even knowing! It's like a script that changes your own view of the website.</li>
+                        <li><b>Blind XSS:</b> You inject a payload, and you don't see it, but it might trigger in an admin panel later. It's like sending a booby-trapped email to the boss! 🕵️‍♂️</li>
+                        <li><b>Self XSS:</b> This is where hackers trick <b>you</b> into running the script on your <b>own</b> browser. "Just copy and paste this into your console, trust me!" (Don't trust them!)</li>
                     </ul>
                 </div>
 
                 <div class="education-card">
-                    <h4>📊 XSS Attack Statistics</h4>
+                    <h4>📊 XSS Attack Statistics (Why It's a Big Deal)</h4>
                     <ul>
-                        <li>Found in 40% of all web applications</li>
-                        <li>Ranked #7 in OWASP Top 10 vulnerabilities</li>
-                        <li>Can affect millions of users simultaneously</li>
-                        <li>Average time to detect: 197 days</li>
-                        <li>Most common in social media and forums</li>
+                        <li>Found in 40% of all web applications. It's a very common party crasher!</li>
+                        <li>Ranked #7 in <b>OWASP Top 10</b> vulnerabilities. Still a top threat!</li>
+                        <li>Can affect millions of users simultaneously. One bad script, many victims.</li>
+                        <li>Average time to detect: 197 days. That's a long time for a sneaky script to hang around!</li>
+                        <li>Most common in social media, forums, and comment sections. Anywhere users can type!</li>
                     </ul>
                 </div>
             </div>
@@ -378,7 +379,7 @@ nav {
             // Show educational message after a brief delay
             setTimeout(() => {
                 if (comment.includes('<script>') || comment.includes('onerror=') || comment.includes('onload=')) {
-                    alert('🚨 XSS Attack Detected!\n\nIf this were a real website, your malicious script would have executed successfully. This demonstrates why input validation and output encoding are crucial for web security!');
+                    alert('🚨 WHOA! XSS Attack Detected! 🚨\n\nIf this were a real website, your malicious script would have just thrown a digital party in everyone\'s browser! This shows why validating and encoding user input is super important. You just became a temporary website overlord! Bow down! 👑');
                 }
             }, 100);
         });

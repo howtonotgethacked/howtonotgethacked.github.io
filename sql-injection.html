@@ -45,6 +45,7 @@ nav {
     font-weight: bold;
     color: #fff;
     text-decoration: none;
+    padding-bottom: 1rem;
 }
 
 .nav-links {
@@ -380,7 +381,7 @@ nav {
     <nav>
         <div class="container">
             <div class="nav-container">
-                <a href="index.html" class="logo">how to not get hacked</a>
+                <a href="index.html" class="logo">HOW TO NOT GET HACKED</a>
                 <ul class="nav-links">
                     <li><a href="index.html">Home</a></li>
                     <li><a href="phishing.html">Phishing</a></li>
@@ -398,24 +399,24 @@ nav {
         <div class="container">
             <div class="demo-section">
                 <h2>💉 SQL Injection Attack Demo</h2>
-                <p>This interactive demonstration shows the difference between vulnerable and secure login implementations. Try both modes to understand how SQL injection works and how to prevent it.</p>
+                <p>Imagine a website's database as a super organized library, and <b>SQL</b> (Structured Query Language) is the language you use to ask for books. <b>SQL Injection</b> is like whispering a secret command to the librarian that makes them hand over <b>all</b> the books, even the super-secret ones! 🤫 This demo shows the difference between a "talkative" (vulnerable) and a "tight-lipped" (secure) login. Try both to see the magic (or mayhem)!</p>
                 
                 <div class="injection-hint">
-                    <h4>🎯 Try This SQL Injection Payload</h4>
-                    <p>In the username field, try entering:</p>
+                    <h4>🎯 Try This SQL Injection Payload (Your Secret Spell! 🪄)</h4>
+                    <p>In the username field, try entering these "magic words":</p>
                     <div class="injection-code">admin' --</div>
-                    <p>Or try:</p>
+                    <p>Or this classic:</p>
                     <div class="injection-code">' OR '1'='1' --</div>
-                    <p>Leave the password field empty or enter anything. See how it behaves differently in each mode!</p>
+                    <p>Leave the password field empty or type anything. The <code>--</code> part is like saying "ignore everything after this!" See how it behaves differently in each mode!</p>
                 </div>
 
                 <div class="mode-selector">
-                    <button id="insecureBtn" class="mode-btn insecure-btn active">🔴 Insecure Login (Vulnerable)</button>
-                    <button id="secureBtn" class="mode-btn secure-btn">🟢 Secure Login (Safe)</button>
+                    <button id="insecureBtn" class="mode-btn insecure-btn active">🔴 Insecure Login (Vulnerable - Easy to Trick!)</button>
+                    <button id="secureBtn" class="mode-btn secure-btn">🟢 Secure Login (Safe - No Tricks Allowed!)</button>
                 </div>
 
                 <div class="login-container">
-                    <div id="modeIndicator" class="mode-indicator insecure">🔴 VULNERABLE MODE - String Concatenation</div>
+                    <div id="modeIndicator" class="mode-indicator insecure">🔴 VULNERABLE MODE - String Concatenation (Risky Business!)</div>
                     <h3>🔐 Admin Login Portal</h3>
                     <form id="sqlForm">
                         <div class="form-group">
@@ -430,7 +431,7 @@ nav {
                     </form>
 
                     <div id="sqlDisplay" class="sql-display">
-                        <h4>Generated SQL Query:</h4>
+                        <h4>Generated SQL Query: (The Database's Inner Thoughts)</h4>
                         <div id="sqlQuery" class="sql-query"></div>
                     </div>
 
@@ -441,27 +442,27 @@ nav {
             </div>
 
             <div class="explanation-section">
-                <h3>💡 How It Works</h3>
+                <h3>💡 How It Works (The Good, The Bad, and The Ugly Code)</h3>
                 <div class="explanation-grid">
                     <div class="explanation-card vulnerable">
-                        <h4>🔴 Vulnerable Implementation</h4>
+                        <h4>🔴 Vulnerable Implementation (The "Trust Everyone" Approach)</h4>
                         <ul>
-                            <li>Uses string concatenation to build SQL queries</li>
-                            <li>User input is directly inserted into the query</li>
-                            <li>Malicious input can alter the query structure</li>
-                            <li>The <code>--</code> comment bypasses password check</li>
-                            <li>Attackers can inject arbitrary SQL commands</li>
+                            <li>Uses <b>string concatenation</b> to build SQL queries. Imagine gluing user input directly into a command without checking it first. Yikes!</li>
+                            <li>User input is directly inserted into the query. It's like letting a stranger write on your library's rule book.</li>
+                            <li>Malicious input can totally change the query's meaning. Suddenly, "find user" becomes "give me everything!"</li>
+                            <li>The <code>--</code> (double dash) is a comment in SQL, so it tells the database to ignore everything after it. It's like saying "password doesn't matter, shhh!" 🤫</li>
+                            <li>Attackers can inject any <b>SQL</b> commands they want. Total chaos!</li>
                         </ul>
                     </div>
 
                     <div class="explanation-card secure">
-                        <h4>🟢 Secure Implementation</h4>
+                        <h4>🟢 Secure Implementation (The "Trust No One, Verify Everything" Approach)</h4>
                         <ul>
-                            <li>Uses parameterized queries/prepared statements</li>
-                            <li>User input is treated as data, not code</li>
-                            <li>Special characters are properly escaped</li>
-                            <li>Query structure cannot be altered</li>
-                            <li>Prevents all forms of SQL injection</li>
+                            <li>Uses <b>parameterized queries</b> or <b>prepared statements</b>. This means the database knows <b>exactly</b> where the user's input ends and the actual command begins. It's like filling out a form, not writing on the rule book.</li>
+                            <li>User input is treated as data, not code. "This is just a username, not a secret command!"</li>
+                            <li>Special characters (like that sneaky <code>'</code>) are properly escaped. They lose their "magic" powers.</li>
+                            <li>The query structure is set in stone and cannot be altered by user input. No more secret commands!</li>
+                            <li>This method prevents all forms of <b>SQL Injection</b>. High five! 👋</li>
                         </ul>
                     </div>
                 </div>
@@ -469,47 +470,47 @@ nav {
 
             <div class="education-grid">
                 <div class="education-card">
-                    <h4>🔍 How SQL Injection Works</h4>
+                    <h4>🔍 How SQL Injection Works (The Hacker's Playbook)</h4>
                     <ul>
-                        <li>Attackers insert malicious SQL code into input fields</li>
-                        <li>Poorly coded applications execute this code directly</li>
-                        <li>Can bypass authentication, access databases</li>
-                        <li>May allow data theft, modification, or deletion</li>
-                        <li>One of the most common web vulnerabilities</li>
+                        <li>Attackers insert naughty <b>SQL</b> code into input fields (like username or search bars).</li>
+                        <li>If the website's code is lazy, it executes this naughty code directly. Bad website! 😠</li>
+                        <li>This can let them bypass logins (poof, you're admin!), peek into databases, or even delete everything. 😱</li>
+                        <li>It's like getting the keys to the whole kingdom just by saying "please" in a very specific, evil way.</li>
+                        <li>It's one of the oldest and still most common web vulnerabilities.</li>
                     </ul>
                 </div>
 
                 <div class="education-card">
-                    <h4>🛡️ How to Prevent SQL Injection</h4>
+                    <h4>🛡️ How to Prevent SQL Injection (Become a Database Bodyguard! 🛡️)</h4>
                     <ul>
-                        <li>Use parameterized queries/prepared statements</li>
-                        <li>Validate and sanitize all user inputs</li>
-                        <li>Use stored procedures when possible</li>
-                        <li>Implement least privilege database access</li>
-                        <li>Regular security testing and code reviews</li>
-                        <li>Use ORM frameworks with built-in protection</li>
+                        <li><b>Always</b> use <b>parameterized queries</b> or <b>prepared statements</b>. This is your #1 defense!</li>
+                        <li><b>Validate and sanitize</b> all user inputs. Think of it as cleaning up messy data before it touches your system.</li>
+                        <li>Use <b>stored procedures</b> when possible (pre-written, safe commands for the database).</li>
+                        <li>Implement <b>least privilege database access</b>. Only give users the bare minimum access they need. Don't give the janitor the master key to the vault!</li>
+                        <li>Regular security testing and code reviews. Find those weaknesses before the bad guys do!</li>
+                        <li>Use <b>ORM</b> (Object-Relational Mapping) frameworks with built-in protection. They handle the security for you!</li>
                     </ul>
                 </div>
 
                 <div class="education-card">
-                    <h4>⚠️ Common SQL Injection Types</h4>
+                    <h4>⚠️ Common SQL Injection Types (The Many Faces of Evil)</h4>
                     <ul>
-                        <li><strong>Union-based:</strong> Combines results from multiple queries</li>
-                        <li><strong>Boolean-based:</strong> Uses true/false conditions</li>
-                        <li><strong>Time-based:</strong> Uses delays to infer information</li>
-                        <li><strong>Error-based:</strong> Exploits database error messages</li>
-                        <li><strong>Second-order:</strong> Stored and executed later</li>
+                        <li><b>Union-based:</b> Like asking for two different sets of books and combining them into one giant, unauthorized pile.</li>
+                        <li><b>Boolean-based:</b> Asking the database a series of yes/no questions to guess information. Like playing 20 Questions with your data.</li>
+                        <li><b>Time-based:</b> Making the database pause for a certain amount of time if a condition is true. It's slow, but sneaky! 🐢</li>
+                        <li><b>Error-based:</b> Tricking the database into showing you error messages that accidentally reveal sensitive info. "Oops, I leaked your credit card number!"</li>
+                        <li><b>Second-order:</b> The injected code isn't executed immediately but stored and then triggers later. A delayed explosion! 💣</li>
                     </ul>
                 </div>
 
                 <div class="education-card">
-                    <h4>📊 SQL Injection Impact</h4>
+                    <h4>📊 SQL Injection Impact (Why We Care)</h4>
                     <ul>
-                        <li>Ranked #3 in OWASP Top 10 vulnerabilities</li>
-                        <li>Found in 1 out of every 5 web applications</li>
-                        <li>Can lead to complete database compromise</li>
-                        <li>Average cost of data breach: $4.45M</li>
-                        <li>Affects applications across all industries</li>
+                        <li>Ranked #3 in <b>OWASP Top 10</b> vulnerabilities. (<b>OWASP</b> stands for Open Web Application Security Project, they're like the cybersecurity hall monitors). It's a big deal!</li>
+                        <li>Found in 1 out of every 5 web applications. It's surprisingly common!</li>
+                        <li>Can lead to complete database compromise. Game over for your data!</li>
+                        <li>Average cost of a data breach: $4.45 million. That's a lot of pizza money! 🍕</li>
+                        <li>Affects applications across all industries. Nobody's safe without proper defenses!</li>
                     </ul>
                 </div>
             </div>
@@ -542,11 +543,11 @@ nav {
             if (currentMode === 'insecure') {
                 insecureBtn.classList.add('active');
                 modeIndicator.className = 'mode-indicator insecure';
-                modeIndicator.textContent = '🔴 VULNERABLE MODE - String Concatenation';
+                modeIndicator.textContent = '🔴 VULNERABLE MODE - String Concatenation (Risky Business!)';
             } else {
                 secureBtn.classList.add('active');
                 modeIndicator.className = 'mode-indicator secure';
-                modeIndicator.textContent = '🟢 SECURE MODE - Parameterized Query';
+                modeIndicator.textContent = '🟢 SECURE MODE - Parameterized Query (Smart & Safe!)';
             }
 
             // Hide previous results
@@ -598,11 +599,11 @@ nav {
             }
             
             if (isInjection) {
-                displayResult(true, "🚨 SQL INJECTION SUCCESSFUL! Unauthorized access granted. In a real system, you would now have admin privileges!");
+                displayResult(true, "🚨 WHOA! SQL INJECTION SUCCESSFUL! You just bypassed security like a boss! In a real system, you'd be dancing through their database right now. Time to buy a lottery ticket! 🥳");
             } else if (username === 'admin' && password === 'admin123') {
-                displayResult(true, "✅ Login successful! Welcome, admin.");
+                displayResult(true, "✅ Login successful! Welcome, admin. Looks like you found the <b>real</b> credentials, not just a trick. 😉");
             } else {
-                displayResult(false, "❌ Login failed: Invalid credentials.");
+                displayResult(false, "❌ Login failed: Invalid credentials. Even in vulnerable mode, you gotta guess <b>some</b> passwords right, or use a good injection! Try 'admin' with '--' in the username field!");
             }
         }
 
@@ -621,9 +622,9 @@ nav {
             
             // In secure mode, only exact matches work
             if (username === 'admin' && password === 'admin123') {
-                displayResult(true, "✅ Login successful! Welcome, admin.");
+                displayResult(true, "✅ Login successful! Welcome, admin. See? Even your clever tricks can't get past a properly secured login! 😎");
             } else {
-                displayResult(false, "❌ Login failed: Invalid credentials. SQL injection attempts are blocked!");
+                displayResult(false, "❌ Login failed: Invalid credentials. Nice try, hacker! But this system is using parameterized queries, so your SQL injection attempts are just fancy words to me! 💪");
             }
         }
 
