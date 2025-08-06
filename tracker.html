@@ -227,6 +227,40 @@ nav {
         gap: 0.5rem;
     }
 }
+
+/* Custom Modal for Alert */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: #111;
+    border: 1px solid #666;
+    padding: 2rem;
+    border-radius: 8px;
+    max-width: 500px;
+    text-align: center;
+    position: relative;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    color: #fff;
+    cursor: pointer;
+}
     </style>
 </head>
 <body>
@@ -340,18 +374,18 @@ nav {
                 <div class="education-card">
                     <h4>⚠️ What Trackers Can Collect (The Data Goldmine)</h4>
                     <ul>
-                        <li><b>Location:</b> City, region, country. They know your general whereabouts!</li>
-                        <li><b>Device:</b> <b>OS</b> (Operating System), browser, screen size, even battery level!</li>
-                        <li><b>Network:</b> <b>ISP</b> (Internet Service Provider), connection type (Wi-Fi, cellular).</li>
-                        <li><b>Behavior:</b> Pages visited, time spent, what you click on. They know your online habits!</li>
-                        <li><b>Personal:</b> Inferred interests, demographics, shopping preferences. They try to guess who you are!</li>
+                        <li><b>Location</b>: City, region, country. They know your general whereabouts!</li>
+                        <li><b>Device</b>: <b>OS</b> (Operating System), browser, screen size, even battery level!</li>
+                        <li><b>Network</b>: <b>ISP</b> (Internet Service Provider), connection type (Wi-Fi, cellular).</li>
+                        <li><b>Behavior</b>: Pages visited, time spent, what you click on. They know your online habits!</li>
+                        <li><b>Personal</b>: Inferred interests, demographics, shopping preferences. They try to guess who you are!</li>
                     </ul>
                 </div>
 
                 <div class="education-card">
                     <h4>📊 Privacy Statistics (The Eye-Opening Numbers)</h4>
                     <ul>
-                        <li>Average website has 21 tracking scripts. That's a lot of digital eyes! 👁️‍🗨️</li>
+                        <li>Average website has 21 tracking scripts. That's a lot of digital eyes! 👀</li>
                         <li>79% of websites use Google Analytics. It's everywhere!</li>
                         <li>Data brokers collect 5,000+ data points per person. You're a walking data factory!</li>
                         <li>Only 14% of users read privacy policies. Who has the time?! (But maybe we should...)</li>
@@ -361,6 +395,17 @@ nav {
             </div>
         </div>
     </main>
+
+    <!-- Custom Modal -->
+    <div id="infoModal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-close" id="closeModal">&times;</span>
+            <h4>🚨 Tracking Complete! DUN DUN DUUUUN! 🚨</h4>
+            <p>This just showed you how much information websites can snoop on you just by you visiting them. In the real world, this data could be used for super-targeted ads (hello, cat food ads after one cat video!), profiling, or even some not-so-nice stuff.</p>
+            <br>
+            <p>So, remember to be mindful of your digital privacy! Don't let the internet know <b>all</b> your secrets! 😉</p>
+        </div>
+    </div>
 
     <script>
         document.getElementById('trackBtn').addEventListener('click', function() {
@@ -380,7 +425,7 @@ nav {
         });
 
         function getBrowserInfo() {
-            // Browser detection
+            // This function uses the browser's built-in navigator object to get info
             const userAgent = navigator.userAgent;
             let browser = 'Unknown';
             let os = 'Unknown';
@@ -407,26 +452,20 @@ nav {
 
         async function getIPInfo() {
             try {
-                // Using ipify API for IP detection
-                const response = await fetch('https://api.ipify.org?format=json');
+                // ipinfo.io is a single API call for all info
+                const response = await fetch('https://ipinfo.io/json');
                 const data = await response.json();
                 
-                document.getElementById('ipAddress').textContent = data.ip;
-                
-                // Get location info using ip-api.com (changed to HTTPS for security)
-                const locationResponse = await fetch(`https://ip-api.com/json/${data.ip}`);
-                const locationData = await locationResponse.json();
-                
-                if (locationData.status === 'success') {
-                    document.getElementById('location').textContent = 
-                        `${locationData.city}, ${locationData.regionName}, ${locationData.country}`;
-                    document.getElementById('isp').textContent = locationData.isp;
+                if (response.ok) {
+                    document.getElementById('ipAddress').textContent = data.ip || 'Unknown';
+                    document.getElementById('location').textContent = `${data.city || 'Unknown'}, ${data.region || 'Unknown'}, ${data.country || 'Unknown'}`;
+                    document.getElementById('isp').textContent = data.org || 'Unknown';
                 } else {
-                    // Fallback if geolocation fails
+                    // Handle non-200 responses
+                    document.getElementById('ipAddress').textContent = 'IP information unavailable';
                     document.getElementById('location').textContent = 'Location unavailable (The internet is playing hide-and-seek!)';
                     document.getElementById('isp').textContent = 'ISP information unavailable (They\'re being shy!)';
                 }
-                
             } catch (error) {
                 console.error('Error fetching IP info:', error);
                 
@@ -441,11 +480,22 @@ nav {
             btn.disabled = false;
             btn.textContent = '🔍 Track Again (If You Dare!)';
             
-            // Show warning message
-            setTimeout(() => {
-                alert('🚨 Tracking Complete! DUN DUN DUUUUN! 🚨\n\nThis just showed you how much information websites can snoop on you just by you visiting them. In the real world, this data could be used for super-targeted ads (hello, cat food ads after one cat video!), profiling, or even some not-so-nice stuff.\n\nSo, remember to be mindful of your digital privacy! Don\'t let the internet know <b>all</b> your secrets! 😉');
-            }, 1000);
+            // Show custom modal
+            document.getElementById('infoModal').style.display = 'flex';
         }
+
+        // Close the modal when the user clicks the close button
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('infoModal').style.display = 'none';
+        });
+
+        // Close the modal when the user clicks outside of it
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById('infoModal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
